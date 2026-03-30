@@ -473,6 +473,16 @@ a {
   flex-wrap: wrap;
 }
 
+.saved-news-btn { 
+  background: #380153;
+  color: #fff9f9;
+}
+
+.unsave-btn {
+  background: #b91c1c !important;
+  color: #ffffff !important;
+}
+
 .news-number {
   width: 28px;
   height: 28px;

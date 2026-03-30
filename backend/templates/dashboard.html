@@ -9,7 +9,7 @@
 <body class="dashboard-page">
   <header class="dashboard-topbar">
     <div class="dashboard-title">
-      <h1> Thuthan Dashboard</h1>
+      <h1>Thuthan Dashboard</h1>
       <p>{{ total_articles }} articles available in the latest renewable energy feed</p>
     </div>
     <div class="dashboard-top-actions">
@@ -18,7 +18,7 @@
     </div>
   </header>
   <section class="dashboard-toolbar">
-    <button class="tool-btn orange-btn" onclick="window.location.reload()">Save &amp; Retrain</button>
+    <a href="{{ url_for('saved_news') }}" class="tool-btn saved-news-btn">Saved News</a>
     <button class="tool-btn green-btn" onclick="shareDashboardWhatsApp()">Send to WhatsApp</button>
     <button class="tool-btn blue-btn" onclick="shareDashboardEmail()">Send Email</button>
     <a href="{{ url_for('download_pdf') }}" class="tool-btn gray-btn">Download PDF</a>
@@ -60,6 +60,16 @@
         <span>{{ item.published }}</span>
         <a href="{{ item.link }}" target="_blank">Read full article</a>
       </div>
+      <form action="{{ url_for('save_single_news') }}" method="post" style="margin-top: 12px;">
+        <input type="hidden" name="title" value="{{ item.title }}">
+        <input type="hidden" name="summary" value="{{ item.summary }}">
+        <input type="hidden" name="source" value="{{ item.source }}">
+        <input type="hidden" name="link" value="{{ item.link }}">
+        <input type="hidden" name="category" value="{{ item.category }}">
+        <input type="hidden" name="published" value="{{ item.published }}">
+        <input type="hidden" name="region" value="{{ item.region }}">
+        <button type="submit" class="tool-btn orange-btn">Save</button>
+      </form>
     </div>
     {% endfor %}
   </section>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved News</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-page">
+  <header class="dashboard-topbar">
+    <div class="dashboard-title">
+      <h1>SAVED NEWS</h1>
+      <p>Previously saved renewable energy news articles</p>
+    </div>
+    <div class="dashboard-top-actions">
+      <a href="{{ url_for('dashboard') }}" class="top-light-btn">Back to Dashboard</a>
+      <a href="{{ url_for('home') }}" class="top-light-btn">Home</a>
+    </div>
+  </header>
+  <section class="dashboard-list">
+    {% if saved_news %}
+      {% for item in saved_news %}
+      <div class="dashboard-card">
+        <div class="dashboard-card-top">
+          <div class="dashboard-left">
+            <span class="news-number">{{ loop.index }}</span>
+            <span class="dashboard-category-pill">{{ item.category }}</span>
+          </div>
+          <span class="dashboard-region">{{ item.region }}</span>
+        </div>
+        <h3>{{ item.title }}</h3>
+        <p class="dashboard-summary">{{ item.summary }}</p>
+        <div class="dashboard-meta">
+          <span>{{ item.source }}</span>
+          <span>{{ item.published }}</span>
+          <a href="{{ item.link }}" target="_blank">Read full article</a>
+        </div>
+        <form action="{{ url_for('delete_saved_news') }}" method="post" style="margin-top: 12px;">
+            <input type="hidden" name="link" value="{{ item.link }}">
+            <button type="submit" class="tool-btn unsave-btn">Unsave</button>
+        </form>
+      </div>
+      {% endfor %}
+    {% else %}
+      <p class="empty-state">No saved news available.</p>
+    {% endif %}
+  </section>
+</body>
+</html>
