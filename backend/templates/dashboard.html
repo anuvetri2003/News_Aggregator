@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thuthan Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-page">
+  <header class="dashboard-topbar">
+    <div class="dashboard-title">
+      <h1> Thuthan Dashboard</h1>
+      <p>{{ total_articles }} articles available in the latest renewable energy feed</p>
+    </div>
+    <div class="dashboard-top-actions">
+      <a href="{{ url_for('home') }}" class="top-light-btn">Home</a>
+      <button class="top-light-btn" onclick="window.location.reload()">Refresh</button>
+    </div>
+  </header>
+  <section class="dashboard-toolbar">
+    <button class="tool-btn orange-btn" onclick="window.location.reload()">Save &amp; Retrain</button>
+    <button class="tool-btn green-btn" onclick="shareDashboardWhatsApp()">Send to WhatsApp</button>
+    <button class="tool-btn blue-btn" onclick="shareDashboardEmail()">Send Email</button>
+    <a href="{{ url_for('download_pdf') }}" class="tool-btn gray-btn">Download PDF</a>
+  </section>
+  <section class="dashboard-info-row">
+    <div class="dashboard-counts">
+      <span>{{ total_articles }} articles</span>
+      <span>{{ categories_count["Government & Tariff"] }} Govt</span>
+      <span>{{ categories_count["Companies & Products"] }} Company</span>
+      <span>{{ categories_count["International News"] }} International</span>
+      <span>{{ categories_count["Others"] }} Others</span>
+    </div>
+  </section>
+  <section class="dashboard-filter-section">
+    <div class="filter-bar dashboard-filter-bar">
+      <button class="filter-btn active" data-category="All">All</button>
+      <button class="filter-btn" data-category="Companies & Products">Companies & Products</button>
+      <button class="filter-btn" data-category="Government & Tariff">Govt & Tariff</button>
+      <button class="filter-btn" data-category="International News">International</button>
+      <button class="filter-btn" data-category="Others">Others</button>
+    </div>
+  </section>
+  <section class="dashboard-list">
+    {% for item in news %}
+    <div class="dashboard-card news-card" data-category="{{ item.category }}">
+      <div class="dashboard-card-top">
+        <div class="dashboard-left">
+          <span class="news-number">{{ loop.index }}</span>
+          <span class="dashboard-category-pill">{{ item.category }}</span>
+        </div>
+        <div class="dashboard-right">
+          <span class="dashboard-region">{{ item.region }}</span>
+        </div>
+      </div>
+      <h3>{{ item.title }}</h3>
+      <p class="dashboard-summary">{{ item.summary }}</p>
+      <div class="dashboard-meta">
+        <span>{{ item.source }}</span>
+        <span>{{ item.published }}</span>
+        <a href="{{ item.link }}" target="_blank">Read full article</a>
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

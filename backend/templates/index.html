@@ -3,127 +3,95 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Renewable Energy News Aggregator</title>
+  <title>Thuthan Renewable Energy</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
-<body>
-
-  <!-- HERO SECTION -->
-  <header class="hero">
-    <div class="hero-content">
-      <p class="mini-tag">Global Energy Intelligence</p>
-      <h1>Renewable Energy News Aggregator</h1>
-      <p class="hero-subtitle">
-        A smart dashboard for tracking the latest renewable energy developments
-        across policy, business, international markets, and industry updates.
-      </p>
-
-      <div class="hero-actions">
-        <button class="action-btn primary-btn" onclick="window.location.reload()">Refresh News</button>
-        <button class="action-btn secondary-btn" onclick="scrollToNews()">Explore News</button>
-        <button class="action-btn primary-btn" onclick="window.location.href='/download'">Download PDF</button>
-      </div>
+<body class="front-page">
+  <header class="front-topbar">
+    <div class="brand">Thuthan</div>
+    <nav class="front-nav">
+      <a href="{{ url_for('dashboard', category='All') }}">ALL</a>
+      <a href="{{ url_for('dashboard', category='Companies & Products') }}">COMPANY &amp; PRODUCTS</a>
+      <a href="{{ url_for('dashboard', category='Government & Tariff') }}">GOVT &amp; TARIFF</a>
+      <a href="{{ url_for('dashboard', category='International News') }}">INTERNATIONAL</a>
+      <a href="{{ url_for('dashboard', category='Others') }}">OTHERS</a>
+    </nav>
+    <div class="front-right">
+      <a href="{{ url_for('dashboard') }}" class="dashboard-btn">Dashboard</a>
     </div>
   </header>
-
-  <!-- STATS -->
-  <section class="stats-section">
-    <div class="stat-card">
-      <span class="stat-number">{{ total_articles }}</span>
-      <span class="stat-label">Total Articles</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">{{ categories_count["Government & Tariff"] }}</span>
-      <span class="stat-label">Govt & Tariff</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">{{ categories_count["Companies & Products"] }}</span>
-      <span class="stat-label">Companies</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">{{ categories_count["International News"] }}</span>
-      <span class="stat-label">International</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-number">{{ categories_count["Others"] }}</span>
-      <span class="stat-label">Others</span>
+  <section class="intro-section">
+    <div class="intro-content">
+      <h1>THUTHAN RENEWABLE ENERGY</h1>
+      <p class="intro-subtitle">News Aggregator</p>
+      <p class="intro-description">
+        A smart renewable energy news platform that highlights policy, industry updates,
+        company developments, and international green energy trends in a simple and
+        organized format.
+      </p>
     </div>
   </section>
-
-  <!-- FEATURED NEWS -->
-  {% if featured_news %}
-  <section class="featured-section">
-    <div class="section-header">
-      <h2>Featured Story</h2>
-    </div>
-
-    <div class="featured-card">
-      <div class="featured-badge">{{ featured_news.category }}</div>
-      <div class="featured-content">
-        <p class="featured-source">Source: {{ featured_news.source }}</p>
-        <h3>{{ featured_news.title }}</h3>
-        <p class="featured-summary">{{ featured_news.summary }}</p>
-
-        <p><b>Region:</b> {{ featured_news.region }}</p>
-
-        <div class="featured-meta">
-          <span>Published: {{ featured_news.published }}</span>
-          <a href="{{ featured_news.link }}" target="_blank">Read Full Article</a>
+  <section class="front-main-grid">
+    {% if featured_news %}
+    <div class="featured-block">
+      <div class="featured-image-box">
+        <img src="{{ url_for('static', filename='images/renewable.png') }}" alt="Renewable Energy">
+        <span class="feature-tag">FEATURED NEWS</span>
+      </div>
+      <div class="featured-text-box">
+        <span class="mini-category">{{ featured_news.category }}</span>
+        <h2>{{ featured_news.title }}</h2>
+        <p>{{ featured_news.summary }}</p>
+        <div class="front-meta">
+          <span><b>Source:</b> {{ featured_news.source }}</span>
+          <span><b>Region:</b> {{ featured_news.region }}</span>
+          <span><b>Published:</b> {{ featured_news.published }}</span>
         </div>
+        <a href="{{ featured_news.link }}" target="_blank" class="front-link">Read Full Summary</a>
       </div>
     </div>
-  </section>
-  {% endif %}
-
-  <!-- NEWS SECTION -->
-  <section class="news-section" id="news-section">
-    <div class="section-header">
-      <h2>Latest News</h2>
-      <p>Filter articles by category</p>
-    </div>
-
-    <!-- FILTER -->
-    <div class="filter-bar">
-      <button class="filter-btn active" data-category="All">All</button>
-      <button class="filter-btn" data-category="Companies & Products">Companies & Products</button>
-      <button class="filter-btn" data-category="Government & Tariff">Government & Tariff</button>
-      <button class="filter-btn" data-category="International News">International News</button>
-      <button class="filter-btn" data-category="Others">Others</button>
-    </div>
-
-    <!-- NEWS GRID -->
-    <div class="news-container">
-      {% for item in news %}
-      <div class="news-card" data-category="{{ item.category }}">
-        
-        <span class="category-badge">{{ item.category }}</span>
-        
-        <p class="news-source">Source: {{ item.source }}</p>
-        
+    {% endif %}
+    <div class="side-news-column">
+      {% for item in side_news %}
+      <div class="side-news-card">
+        <span class="side-category">{{ item.category }}</span>
         <h3>{{ item.title }}</h3>
-        
-        <p class="news-date">Published: {{ item.published }}</p>
-
-        <p><b>Region:</b> {{ item.region }}</p>
-        
-        <p class="news-summary">{{ item.summary }}</p>
-        
-        <a href="{{ item.link }}" target="_blank" class="read-more">Read More</a>
-
+        <p>{{ item.summary }}</p>
+        <a href="{{ item.link }}" target="_blank" class="front-link">Read Full Summary</a>
       </div>
       {% endfor %}
     </div>
   </section>
-
-  <!-- FOOTER -->
-  <footer class="footer">
-    <h3>Renewable Energy News Aggregator</h3>
-    <p>
-      Built for tracking global renewable energy developments in a clean and organized way.
-    </p>
+  <section class="bottom-grid">
+    {% for item in bottom_news %}
+    <div class="bottom-card text-only-card">
+      <span class="bottom-category">{{ item.category }}</span>
+      <h3>{{ item.title }}</h3>
+      <p>{{ item.summary }}</p>
+      <div class="bottom-source">SOURCE: {{ item.source }}</div>
+    </div>
+    {% endfor %}
+    <div class="quote-card">
+      <div>
+        <h3>Thuthan Green Insight</h3>
+        <blockquote>
+          "Clean energy growth depends on smart policy, global innovation,
+          and sustainable technology adoption."
+        </blockquote>
+        <div class="quote-meta">– THUTHAN EDITORIAL VIEW</div>
+      </div>
+      <div class="impact-box">
+        <span>TODAY'S FOCUS</span>
+        <h4>Solar • Wind • Policy</h4>
+        <p>Daily renewable energy highlights from India and global markets.</p>
+      </div>
+    </div>
+  </section>
+  <footer class="front-footer">
+    <div class="footer-brand">
+      <h3>Thuthan Renewable Energy</h3>
+      <p>© 2026 Thuthan. Renewable Energy News Aggregator.</p>
+    </div>
   </footer>
-
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
 </html>
