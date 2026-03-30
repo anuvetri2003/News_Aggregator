@@ -7,10 +7,8 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body class="front-page">
-
   <header class="front-topbar">
     <div class="brand">Thuthan</div>
-
     <nav class="front-nav">
       <a href="{{ url_for('dashboard', category='All') }}">ALL</a>
       <a href="{{ url_for('dashboard', category='Companies & Products') }}">COMPANY &amp; PRODUCTS</a>
@@ -18,12 +16,10 @@
       <a href="{{ url_for('dashboard', category='International News') }}">INTERNATIONAL</a>
       <a href="{{ url_for('dashboard', category='Others') }}">OTHERS</a>
     </nav>
-
     <div class="front-right">
       <a href="{{ url_for('dashboard') }}" class="dashboard-btn">Dashboard</a>
     </div>
   </header>
-
   <section class="intro-section">
     <div class="intro-content">
       <h1>THUTHAN RENEWABLE ENERGY</h1>
@@ -35,7 +31,6 @@
       </p>
     </div>
   </section>
-
   {% if featured_news %}
   <section class="featured-section">
     <div class="featured-block">
@@ -43,24 +38,20 @@
         <img src="{{ url_for('static', filename='images/renewable.jpg') }}" alt="Renewable Energy">
         <span class="feature-tag">FEATURED NEWS</span>
       </div>
-
       <div class="featured-text-box">
         <span class="mini-category">{{ featured_news.category }}</span>
         <h2>{{ featured_news.title }}</h2>
         <p>{{ featured_news.summary }}</p>
-
         <div class="front-meta">
           <span><b>Source:</b> {{ featured_news.source }}</span>
           <span><b>Region:</b> {{ featured_news.region }}</span>
           <span><b>Published:</b> {{ featured_news.published }}</span>
         </div>
-
         <a href="{{ featured_news.link }}" target="_blank" class="front-link">Read Full Summary</a>
       </div>
     </div>
   </section>
   {% endif %}
-
   <section class="category-news-grid">
     {% for section in category_sections %}
       {% if section.item %}
@@ -68,20 +59,16 @@
         <span class="bottom-category">{{ section.label }}</span>
         <h3>{{ section.item.title }}</h3>
         <p>{{ section.item.summary }}</p>
-
         <div class="card-meta-row">
           <span><b>Source:</b> {{ section.item.source }}</span>
         </div>
-
         <a href="{{ section.item.link }}" target="_blank" class="front-link">Read Full Summary</a>
       </div>
-
       {% if loop.index == 2 %}
       <div class="quote-card-grid">
         <div class="quote-image-box">
           <img src="{{ url_for('static', filename='images/image.webp') }}" alt="Renewable Energy Insight">
         </div>
-
         <div class="quote-content">
           <h3>Thuthan Green Insight</h3>
           <p class="quote-text">
@@ -90,7 +77,6 @@
             a cleaner and greener world.
           </p>
         </div>
-
         <div class="impact-box">
           <span>TODAY'S FOCUS</span>
           <h4>Solar • Wind • Policy</h4>
@@ -98,17 +84,14 @@
         </div>
       </div>
       {% endif %}
-
       {% endif %}
     {% endfor %}
   </section>
-
   <footer class="front-footer">
     <div class="footer-brand">
       <h3>Thuthan Renewable Energy</h3>
       <p>© 2026 Thuthan. Renewable Energy News Aggregator.</p>
     </div>
   </footer>
-
 </body>
 </html>
